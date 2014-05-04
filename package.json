@@ -1,5 +1,5 @@
 {
-  "name": "level-kue",
+  "name": "level-kued",
   "version": "0.0.1",
   "description": "queuing and releasing",
   "main": "main.js",
@@ -13,7 +13,7 @@
     "should": "~3.3.1"
   },
   "scripts": {
-    "test": "make test"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
