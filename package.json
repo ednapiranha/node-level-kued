@@ -6,7 +6,9 @@
   "dependencies": {
     "level": "~0.18.0",
     "level-sublevel": "~5.2.0",
-    "leveldown": "~0.10.2"
+    "leveldown": "~0.10.2",
+    "concat-stream": "~1.4.4",
+    "level-ttl": "~0.6.0"
   },
   "devDependencies": {
     "mocha": "~1.18.2",
