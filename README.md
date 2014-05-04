@@ -1,5 +1,5 @@
-# npm-template
+# level-kued
 
-This is a template for creating new node modules.
+WIP
 
-Replace package.json and main.js with your project code and info.
+Queuing and releasing items based on TTL and how many items should appear before they are released.
