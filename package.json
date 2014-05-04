@@ -1,0 +1,23 @@
+{
+  "name": "level-kue",
+  "version": "0.0.1",
+  "description": "queuing and releasing",
+  "main": "main.js",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "should": "~3.3.1"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ednapiranha/node-level-kue.git"
+  },
+  "keywords": ["leveldb", "queuing"],
+  "author": "Edna Piranha <jen@ednapiranha.com> (http://ednapiranha.com)",
+  "license": "BSD"
+}
