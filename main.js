@@ -7,24 +7,39 @@ var Kued = function (options) {
   var Sublevel = require('level-sublevel');
   var concat = require('concat-stream');
 
-  var queuedList = [];
   var self = this;
+  var TTL = 60000;
 
   options = options || {};
 
-
-  this.dbPath = options.db || './db';
-  this.ttl = parseInt(options.ttl, 10) || 1000;
+  this.queueDBPath = options.queueDB || './db/queued-db';
+  this.pairDBPath = options.pairDB || './db/paired-db';
+  this.itemsDBPath = options.itemsDB || './db/items-db';
+  this.queueTTL = parseInt(options.queueTTL, 10) || TTL;
+  this.pairTTL = parseInt(options.pairTTL, 10) || TTL;
   this.limit = parseInt(options.limit, 10) || 2;
-  this.queued = Sublevel(level(this.dbPath, {
+
+  if (this.limit < 2) {
+    throw new Error('You need a limit greater than 1');
+  }
+
+  this.queued = Sublevel(level(this.queueDBPath, {
+    createIfMissing: true,
+    valueEncoding: 'json'
+  }));
+
+  this.paired = Sublevel(level(this.pairDBPath, {
+    createIfMissing: true,
+    valueEncoding: 'json'
+  }));
+
+  this.items = Sublevel(level(this.itemsDBPath, {
     createIfMissing: true,
     valueEncoding: 'json'
   }));
 
   var getQueued = function (next) {
-    var rs = self.queued.createReadStream({
-      limit: self.limit
-    });
+    var rs = self.queued.createReadStream();
 
     rs.pipe(concat(function (q) {
       next(null, {
@@ -37,37 +52,79 @@ var Kued = function (options) {
     });
   };
 
-  this.add = function (value, next) {
-    getQueued(function (err, q) {
+  var setPairKey = function (key, item) {
+    self.items.put('pairKey!' + item.key, key, { ttl: self.pairTTL }, function (err) {
+      if (err) {
+        throw err;
+      }
+
+      self.queued.del(item.key);
+    });
+  };
+
+  var addPair = function (origKey, items, next) {
+    var key = uuid.v4();
+
+    self.paired.put(key, items, { ttl: self.pairTTL }, function (err) {
       if (err) {
         next(err);
         return;
       }
 
-      queued.put('queued!' + uuid.v4(), value, { ttl: self.ttl }, function (err) {
-        if (err) {
-          next(err);
-          return;
-        }
+      items.forEach(function (item) {
+        setPairKey(key, item);
+      });
 
-        next(null, key);
+      next(null, {
+        origKey: origKey,
+        pairKey: key
       });
     });
   };
 
-  this.release = function () {
+  var getKey = function (key, next) {
     getQueued(function (err, q) {
       if (err) {
         next(err);
         return;
       }
 
-      if (q.length < self.limit) {
-        next(new Error('Not enough in the queue to match the minimum limit'));
+      if (q.queued.length >= self.limit) {
+        addPair(key, q.queued, next);
+      } else {
+        next(null, false);
+      }
+    });
+  };
+
+  this.add = function (value, next) {
+    var key = uuid.v4();
+
+    self.queued.put(key, value, { ttl: self.queueTTL }, function (err) {
+      if (err) {
+        next(err);
         return;
       }
 
-      next(null, q);
+      getKey(key, next);
+    });
+  };
+
+  this.getPair = function (key, next) {
+    this.items.get('pairKey!' + key, function (err, pairKey) {
+      if (err || !pairKey) {
+        next(new Error('No pairing found'));
+        return;
+      }
+
+      self.paired.get(pairKey, function (err, pair) {
+        if (err || !pair) {
+          next(new Error('No pairing found'));
+          return;
+        }
+
+        next(null, pair);
+      });
     });
   };
 };
