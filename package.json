@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ednapiranha/node-level-kue.git"
+    "url": "git://github.com/ednapiranha/node-level-kued.git"
   },
   "keywords": ["leveldb", "queuing"],
   "author": "Edna Piranha <jen@ednapiranha.com> (http://ednapiranha.com)",
