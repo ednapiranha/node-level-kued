@@ -4,7 +4,9 @@
   "description": "queuing and releasing",
   "main": "main.js",
   "dependencies": {
-
+    "level": "~0.18.0",
+    "level-sublevel": "~5.2.0",
+    "leveldown": "~0.10.2"
   },
   "devDependencies": {
     "mocha": "~1.18.2",
