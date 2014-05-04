@@ -1,7 +1,7 @@
 {
   "name": "level-kued",
   "version": "0.0.1",
-  "description": "queuing and releasing",
+  "description": "queuing and pairing",
   "main": "main.js",
   "dependencies": {
     "level": "~0.18.0",
