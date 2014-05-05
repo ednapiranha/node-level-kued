@@ -127,6 +127,27 @@ var Kued = function (options) {
       });
     });
   };
+
+  this.cancel = function (key, next) {
+    var pairKey;
+
+    this.getPair(key, function (err, pair) {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      // kick everything in this pair out of db
+      pair.forEach(function (p) {
+        self.items.get('pairKey!' + p.key, function (err, pairKey) {
+          self.paired.del(pairKey);
+          self.items.del(p.key);
+        });
+      });
+
+      next(null, true);
+    });
+  };
 };
 
 module.exports = Kued;

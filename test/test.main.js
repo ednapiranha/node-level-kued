@@ -54,4 +54,24 @@ describe('kued', function () {
       });
     });
   });
+
+  describe('.cancel', function () {
+    it('should cancel items from the queue', function (done) {
+      q.add('test2', function (err, key2) {
+        should.exist(key2);
+
+        currKey = key2.origKey;
+
+        q.cancel(key2.origKey, function (err, status) {
+          should.exist(status);
+
+          q.getPair(currKey, function (err, k) {
+            err.toString().should.equal('Error: No pairing found');
+            should.not.exist(k);
+            done();
+          });
+        });
+      });
+    });
+  });
 });
