@@ -131,6 +131,9 @@ var Kued = function (options) {
   this.cancel = function (key, next) {
     var pairKey;
 
+    // kick user out of the queue
+    this.queued.del(key);
+
     this.getPair(key, function (err, pair) {
       if (err) {
         next(err);
