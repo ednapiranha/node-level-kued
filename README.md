@@ -5,6 +5,7 @@
 This allows you to queue and pair items with the following options:
 
 1. Set a TTL on the queued items and on the paired items
+2. Retrieve a pairKey once you are paired with someone else
 
 ## Use case
 
