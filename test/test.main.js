@@ -24,7 +24,8 @@ describe('kued', function () {
   describe('.add', function () {
     it('should add two items to the queue', function (done) {
       q.add('test', function (err, key1) {
-        key1.should.equal(false); // false pairing key because we only have 1 not 2 items available
+        should.exist(key1);
+        key1.pairKey.should.equal(false); // false pairing key because we only have 1 not 2 items available
 
         q.add('test2', function (err, key2) {
           should.exist(key2);

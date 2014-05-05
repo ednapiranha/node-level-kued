@@ -92,7 +92,10 @@ var Kued = function (options) {
       if (q.queued.length >= self.limit) {
         addPair(key, q.queued, next);
       } else {
-        next(null, false);
+        next(null, {
+          origKey: key,
+          pairKey: false
+        });
       }
     });
   };
