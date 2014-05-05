@@ -1,6 +1,6 @@
 {
   "name": "level-kued",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "queuing and pairing",
   "main": "main.js",
   "dependencies": {
@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git://github.com/ednapiranha/node-level-kued.git"
   },
-  "keywords": ["leveldb", "queuing"],
+  "keywords": ["leveldb", "queuing", "pairing", "games"],
   "author": "Edna Piranha <jen@ednapiranha.com> (http://ednapiranha.com)",
   "license": "BSD"
 }
