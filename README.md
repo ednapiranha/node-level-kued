@@ -34,14 +34,23 @@ Let's say you are playing a game and you need 2 players before you can start. Yo
       }
     });
 
-This returns the key for that particular user. If there are no other users, this key is false. Otherwise it is in the format of:
+This returns the key for that particular user. If there are no other users, this key is false. Let's add another user:
+
+
+    q.add('notjen', function (err, key) {
+      if (!err) {
+        console.log(key);
+      }
+    });
+
+Now that there are at least two users, the key returns in the format of:
 
     {
       origKey: 111,
       pairKey: 222
     }
 
-where pairKey is the group key.
+where origKey is the user key and pairKey is the group key.
 
 ## Get your pairing
 
@@ -51,7 +60,17 @@ where pairKey is the group key.
       }
     });
 
-where key is the pairKey.
+where key is the pairKey (group key).
+
+## Cancel pairing
+
+    q.cancel(key, function (err, status) {
+      if (!err) {
+        console.log(status);
+      }
+    });
+
+where key is the user key.
 
 ## Tests
 
