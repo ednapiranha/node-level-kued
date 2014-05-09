@@ -66,7 +66,7 @@ where origKey is the user key and pairKey is the group key.
       }
     });
 
-where key is the pairKey (group key).
+where key is the user key.
 
 ## Cancel pairing
 

@@ -103,7 +103,7 @@ var Kued = function (options) {
   this.add = function (value, next) {
     var key = uuid.v4();
 
-    self.queued.put(key, value, { ttl: self.queueTTL }, function (err) {
+    this.queued.put(key, value, { ttl: this.queueTTL }, function (err) {
       if (err) {
         next(err);
         return;
