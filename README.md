@@ -16,9 +16,7 @@ Let's say you are playing a game and you need 2 players before you can start. Yo
 ## Usage
 
     var q = new Kued({
-      pairDB: './db/paired-db',
-      queueDB: './db/queued-db',
-      itemsDB: './db/items-db',
+      dbPath: './db',
       queueTTL: 10000,
       pairTTL: 20000,
       limit: 2

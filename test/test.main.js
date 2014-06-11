@@ -7,9 +7,7 @@ var child = require('child_process');
 var Kued = require('../main');
 
 var q = new Kued({
-  pairDB: './test/db/paired-db',
-  queueDB: './test/db/queued-db',
-  itemsDB: './test/db/items-db',
+  dbPath: './test/db',
   queueTTL: 1,
   pairTTL: 1
 });
@@ -18,7 +16,7 @@ var currKey;
 
 describe('kued', function () {
   after(function () {
-    child.exec('rm -rf ./test/db/*-db');
+    child.exec('rm -rf ./test/db/*');
   });
 
   describe('.add', function () {
@@ -30,6 +28,7 @@ describe('kued', function () {
         q.add('test2', function (err, key2) {
           should.exist(key2);
           currKey = key2.origKey;
+          should.exist(key2.pairKey);
           done();
         });
       });

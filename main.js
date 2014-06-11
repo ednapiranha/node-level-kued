@@ -12,9 +12,7 @@ var Kued = function (options) {
 
   options = options || {};
 
-  this.queueDBPath = options.queueDB || './db/queued-db';
-  this.pairDBPath = options.pairDB || './db/paired-db';
-  this.itemsDBPath = options.itemsDB || './db/items-db';
+  this.dbPath = options.dbPath || './db';
   this.queueTTL = parseInt(options.queueTTL, 10) || TTL;
   this.pairTTL = parseInt(options.pairTTL, 10) || TTL;
   this.limit = parseInt(options.limit, 10) || 2;
@@ -23,20 +21,14 @@ var Kued = function (options) {
     throw new Error('You need a limit greater than 1');
   }
 
-  this.queued = Sublevel(level(this.queueDBPath, {
+  var db = Sublevel(level(this.dbPath, {
     createIfMissing: true,
     valueEncoding: 'json'
   }));
 
-  this.paired = Sublevel(level(this.pairDBPath, {
-    createIfMissing: true,
-    valueEncoding: 'json'
-  }));
-
-  this.items = Sublevel(level(this.itemsDBPath, {
-    createIfMissing: true,
-    valueEncoding: 'json'
-  }));
+  this.queued = db.sublevel('queued');
+  this.paired = db.sublevel('paired');
+  this.items = db.sublevel('items');
 
   var getQueued = function (next) {
     var rs = self.queued.createReadStream();
