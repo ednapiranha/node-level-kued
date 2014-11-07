@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'test';
 
 var should = require('should');
 var child = require('child_process');
-var Kued = require('../main');
+var Kued = require('../index');
 
 var q = new Kued({
   dbPath: './test/db',
