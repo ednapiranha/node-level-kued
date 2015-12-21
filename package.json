@@ -4,24 +4,29 @@
   "description": "queuing and pairing",
   "main": "index.js",
   "dependencies": {
-    "level": "~0.18.0",
-    "level-sublevel": "~6.3.15",
     "concat-stream": "~1.4.6",
-    "level-ttl": "~2.1.0",
-    "uuid": "~2.0.1"
+    "level": "~1.4.0",
+    "level-sublevel": "~6.3.15",
+    "level-ttl": "^2.1.1",
+    "uuid": "~1.4.2"
   },
   "devDependencies": {
-    "mocha": "~2.0.1",
-    "should": "~4.0.4"
+    "mocha": "^1.18.2",
+    "should": "^3.2.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/ednapiranha/node-level-kued.git"
   },
-  "keywords": ["leveldb", "queuing", "pairing", "games"],
-  "author": "Edna Piranha <jen@ednapiranha.com> (http://ednapiranha.com)",
-  "license": "BSD"
+  "keywords": [
+    "leveldb",
+    "queuing",
+    "pairing",
+    "games"
+  ],
+  "author": "Jen",
+  "license": "BSD-3-Clause"
 }

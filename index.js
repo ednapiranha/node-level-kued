@@ -56,7 +56,6 @@ var Kued = function (options) {
 
   var addPair = function (origKey, items, next) {
     var key = uuid.v4();
-
     self.paired.put(key, items, { ttl: self.pairTTL }, function (err) {
       if (err) {
         next(err);
